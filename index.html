@@ -3,144 +3,895 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>grid. - Parrilla de Contenido</title>
+<title>grid. צור - Content Management</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-  font-family: Arial, sans-serif;
-  background: #0a0a0a; 
-  color: #fff;
+
+html, body {
+  width: 100%;
+  height: 100%;
 }
-.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-.login-screen { display: none; }
-.login-screen.show { display: block; }
-.admin-screen { display: none; }
-.admin-screen.show { display: block; }
-.login-box { background: #1a1a1a; padding: 40px; border-radius: 8px; max-width: 400px; margin: 100px auto; }
-.login-box h1 { margin-bottom: 20px; text-align: center; }
-.form-group { margin-bottom: 15px; }
-.form-group label { display: block; margin-bottom: 5px; }
-.form-group input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #333; border-radius: 4px; color: #fff; }
-.btn { width: 100%; padding: 10px; background: #7c3aed; border: none; border-radius: 4px; color: #fff; cursor: pointer; font-weight: bold; }
-.btn:hover { background: #6d28d9; }
-.error { color: #ef4444; font-size: 12px; margin-top: 10px; }
-.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
-.topbar h1 { margin: 0; }
-.btn-logout { background: #374151; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-.stat-card { background: #1a1a1a; padding: 20px; border-radius: 8px; }
-.stat-label { font-size: 12px; color: #999; margin-bottom: 10px; }
-.stat-value { font-size: 32px; font-weight: bold; }
-.btn-new { background: #7c3aed; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 20px; }
-.calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 30px; }
-.day-header { text-align: center; color: #999; padding: 10px 0; font-weight: bold; }
-.day { background: #1a1a1a; padding: 10px; border-radius: 4px; min-height: 100px; border: 1px solid #333; cursor: pointer; }
-.day:hover { background: #252525; }
-.day-number { font-weight: bold; margin-bottom: 5px; }
-.day-posts { font-size: 11px; }
-.day-post { background: #0a0a0a; padding: 3px 6px; margin: 3px 0; border-radius: 3px; cursor: pointer; }
-.posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.post-card { background: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
-.post-header { padding: 15px; border-bottom: 1px solid #333; }
-.post-title { font-weight: bold; margin-bottom: 5px; }
-.post-meta { font-size: 12px; color: #999; }
-.post-image { width: 100%; aspect-ratio: 1; object-fit: cover; background: #0a0a0a; }
-.post-body { padding: 15px; }
-.post-copy { margin-bottom: 10px; line-height: 1.5; }
-.post-networks { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
-.post-network { font-size: 11px; background: #0a0a0a; padding: 3px 8px; border-radius: 4px; }
-.post-status { display: inline-block; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
-.status-pending { background: #92400e; color: #fcd34d; }
-.status-approved { background: #065f46; color: #10b981; }
-.post-actions { padding: 10px 15px; border-top: 1px solid #333; display: flex; gap: 8px; }
-.post-actions button { flex: 1; padding: 6px; background: #0a0a0a; border: 1px solid #333; border-radius: 4px; color: #fff; cursor: pointer; font-size: 12px; }
-.post-actions button:hover { background: #252525; }
-.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; }
-.modal.show { display: flex; align-items: center; justify-content: center; }
-.modal-content { background: #1a1a1a; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
-.modal-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; }
-.form-group textarea { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #333; border-radius: 4px; color: #fff; font-family: Arial; min-height: 100px; resize: vertical; }
-.checkbox-group { display: flex; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
-.checkbox-group label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
-.img-upload { border: 2px dashed #333; padding: 20px; text-align: center; border-radius: 4px; cursor: pointer; margin: 15px 0; }
-.img-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
-.img-thumb { position: relative; aspect-ratio: 1; border-radius: 4px; overflow: hidden; border: 1px solid #333; }
-.img-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.img-remove { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: rgba(0,0,0,0.9); border: none; color: #fff; cursor: pointer; border-radius: 50%; }
-.modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
-.modal-buttons button { flex: 1; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-.modal-buttons .cancel { background: #374151; color: #fff; }
-.modal-buttons .save { background: #7c3aed; color: #fff; }
-.modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f0f1e 0%, #1a0f2e 100%);
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+/* LOGIN */
+.login-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0f0f1e 0%, #1a0f2e 100%);
+  z-index: 9999;
+}
+
+.login-screen.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 50px 40px;
+  border-radius: 20px;
+  max-width: 420px;
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.login-box h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  text-align: center;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-box p {
+  text-align: center;
+  color: #a0a0b0;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #b0b0c0;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: #e0e0e0;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #7c3aed;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 13px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* ADMIN SCREEN */
+.admin-screen {
+  display: none;
+}
+
+.admin-screen.show {
+  display: block;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100vh;
+  background: rgba(15, 15, 30, 0.8);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 20px;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-item {
+  padding: 12px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  font-size: 14px;
+}
+
+.sidebar-item:hover {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+.sidebar-item.active {
+  background: rgba(124, 58, 237, 0.3);
+  border-color: #7c3aed;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 30px;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.topbar h1 {
+  font-size: 24px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-info p {
+  font-size: 13px;
+  color: #a0a0b0;
+}
+
+.btn-logout {
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  color: #ff6b6b;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 107, 107, 0.3);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(124, 58, 237, 0.3);
+  transform: translateY(-3px);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #a0a0b0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.stat-value {
+  font-size: 36px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-new {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+.btn-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+}
+
+/* CALENDAR */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-nav button {
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.5);
+  color: #7c3aed;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 0 5px;
+  transition: all 0.3s ease;
+}
+
+.calendar-nav button:hover {
+  background: rgba(124, 58, 237, 0.3);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.day-header {
+  text-align: center;
+  font-size: 12px;
+  color: #a0a0b0;
+  padding: 10px 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.day {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+  min-height: 110px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.day:hover {
+  background: rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.5);
+  transform: translateY(-2px);
+}
+
+.day.other-month {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.day.other-month:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.day-number {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #e0e0e0;
+}
+
+.day-posts {
+  font-size: 11px;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.day-post {
+  background: rgba(124, 58, 237, 0.3);
+  padding: 4px 8px;
+  margin: 3px 0;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 2px solid #7c3aed;
+}
+
+.day-post:hover {
+  background: rgba(124, 58, 237, 0.5);
+}
+
+.day-post.pending {
+  border-left-color: #f59e0b;
+}
+
+.day-post.approved {
+  border-left-color: #10b981;
+}
+
+/* POSTS GRID */
+.posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+.post-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.post-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(124, 58, 237, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+}
+
+.post-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.post-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.post-meta {
+  font-size: 12px;
+  color: #a0a0b0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.post-body {
+  padding: 20px;
+}
+
+.post-copy {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #c0c0d0;
+  white-space: pre-wrap;
+}
+
+.post-networks {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.post-network {
+  font-size: 11px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  color: #a8d5ff;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.post-status {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.status-pending {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.status-approved {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.post-actions {
+  display: flex;
+  gap: 8px;
+  padding: 15px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.post-actions button {
+  flex: 1;
+  padding: 8px 12px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  border-radius: 8px;
+  color: #a8d5ff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.post-actions button:hover {
+  background: rgba(124, 58, 237, 0.4);
+  border-color: rgba(124, 58, 237, 0.6);
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background: rgba(20, 20, 40, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #a0a0b0;
+  font-size: 28px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  color: #e0e0e0;
+  transform: rotate(90deg);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #b0b0c0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #e0e0e0;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #7c3aed;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.checkbox-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 500;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #7c3aed;
+}
+
+.img-upload {
+  border: 2px dashed rgba(124, 58, 237, 0.5);
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 15px 0;
+  transition: all 0.3s ease;
+  background: rgba(124, 58, 237, 0.05);
+}
+
+.img-upload:hover {
+  border-color: #7c3aed;
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.img-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.img-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.img-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 107, 107, 0.8);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.img-remove:hover {
+  background: #ff6b6b;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.modal-buttons .cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-buttons .cancel:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.modal-buttons .save {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+.modal-buttons .save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .main-content {
+    margin-left: 200px;
+    padding: 20px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .posts {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .day {
+    min-height: 80px;
+    padding: 8px;
+  }
+
+  .day-posts {
+    max-height: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 150px;
+    padding: 20px 10px;
+  }
+
+  .main-content {
+    margin-left: 150px;
+    padding: 15px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar h2 {
+    font-size: 14px;
+  }
+
+  .sidebar-item {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div class="login-screen show">
-  <div class="container">
-    <div class="login-box">
-      <h1>grid. צור</h1>
-      <p style="text-align: center; color: #999; margin-bottom: 30px;">Parrilla de Contenido</p>
-      
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="loginEmail" value="admin@tsur.com">
-      </div>
-      
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" id="loginPassword" value="admin123">
-      </div>
-      
-      <button class="btn" onclick="login()">Ingresar</button>
-      <div id="loginError" class="error"></div>
+  <div class="login-box">
+    <h1>grid. צור</h1>
+    <p>Content Management Platform</p>
+    
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" value="admin@tsur.com">
     </div>
+    
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input type="password" id="loginPassword" value="admin123">
+    </div>
+    
+    <button class="btn" onclick="login()">Ingresar</button>
+    <div id="loginError" class="error"></div>
   </div>
 </div>
 
 <!-- ADMIN -->
 <div class="admin-screen">
-  <div class="container">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>grid. צור</h2>
+    <div class="sidebar-menu">
+      <div class="sidebar-item active">📊 Dashboard</div>
+      <div class="sidebar-item">📅 Calendario</div>
+      <div class="sidebar-item">👥 Empresas</div>
+      <div class="sidebar-item">⚙️ Configuración</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <!-- TOPBAR -->
     <div class="topbar">
-      <h1>grid. צור</h1>
-      <div>
-        <span id="userEmail" style="color: #999; margin-right: 20px;"></span>
-        <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+      <h1>Dashboard</h1>
+      <div class="topbar-right">
+        <div class="user-info">
+          <p>Bienvenido</p>
+          <p id="userEmail" style="font-weight: 600;"></p>
+        </div>
+        <button class="btn-logout" onclick="logout()">Salir</button>
       </div>
     </div>
 
+    <!-- STATS -->
     <div class="stats">
       <div class="stat-card">
-        <div class="stat-label">TOTAL POSTS</div>
+        <div class="stat-label">Total Posts</div>
         <div class="stat-value" id="statTotal">0</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">APROBADOS</div>
-        <div class="stat-value" style="color: #10b981;" id="statApproved">0</div>
+        <div class="stat-label">Aprobados</div>
+        <div class="stat-value" id="statApproved">0</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">PENDIENTES</div>
-        <div class="stat-value" style="color: #f59e0b;" id="statPending">0</div>
+        <div class="stat-label">Pendientes</div>
+        <div class="stat-value" id="statPending">0</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">RECHAZADOS</div>
-        <div class="stat-value" style="color: #ef4444;" id="statRejected">0</div>
+        <div class="stat-label">Rechazados</div>
+        <div class="stat-value" id="statRejected">0</div>
       </div>
     </div>
 
-    <button class="btn-new" onclick="openNewPost()">+ Nuevo Post</button>
-
-    <h2 style="margin-bottom: 20px;">CALENDARIO</h2>
-    <div id="calendarMonthYear" style="margin-bottom: 10px; text-align: center; font-weight: bold;"></div>
-    <div style="margin-bottom: 10px; text-align: center;">
-      <button class="btn" style="width: auto; padding: 8px 15px; margin-right: 10px;" onclick="prevMonth()">‹ Anterior</button>
-      <button class="btn" style="width: auto; padding: 8px 15px;" onclick="nextMonth()">Siguiente ›</button>
+    <!-- CALENDAR SECTION -->
+    <div style="margin-bottom: 40px;">
+      <div class="section-title">
+        <span>📅 Calendario</span>
+        <div class="calendar-nav">
+          <button onclick="prevMonth()">‹</button>
+          <span id="calendarMonthYear" style="color: #b0b0c0; font-size: 14px; min-width: 150px; text-align: center;"></span>
+          <button onclick="nextMonth()">›</button>
+        </div>
+      </div>
+      <div class="calendar" id="calendar"></div>
     </div>
-    <div class="calendar" id="calendar"></div>
 
-    <h2 style="margin-bottom: 20px;">POSTS RECIENTES</h2>
-    <div class="posts" id="postsContainer"></div>
+    <!-- POSTS SECTION -->
+    <div>
+      <div class="section-title">
+        <span>📮 Posts Recientes</span>
+        <button class="btn-new" onclick="openNewPost()">+ Nuevo Post</button>
+      </div>
+      <div class="posts" id="postsContainer"></div>
+    </div>
   </div>
 </div>
 
@@ -152,7 +903,7 @@ body {
     
     <div class="form-group">
       <label>Título</label>
-      <input type="text" id="postTitle" placeholder="Ej. Promo Verano">
+      <input type="text" id="postTitle" placeholder="Ej. Promo Verano 2025">
     </div>
 
     <div class="form-group">
@@ -178,7 +929,7 @@ body {
     <div class="form-group">
       <label>Imágenes</label>
       <div class="img-upload" onclick="document.getElementById('fileInput').click()">
-        📎 Haz clic para agregar imágenes (máximo 6)
+        📸 Haz clic para agregar imágenes
       </div>
       <input type="file" id="fileInput" accept="image/*" multiple style="display: none" onchange="handleFiles()">
       <div class="img-preview" id="imgPreview"></div>
@@ -186,13 +937,12 @@ body {
 
     <div class="modal-buttons">
       <button class="cancel" onclick="closeModal()">Cancelar</button>
-      <button class="save" onclick="savePost()">Guardar</button>
+      <button class="save" onclick="savePost()">Guardar Post</button>
     </div>
   </div>
 </div>
 
 <script>
-// ===== DATOS EN MEMORIA =====
 let currentUser = null;
 let posts = [];
 let uploadedImages = [];
@@ -203,7 +953,6 @@ let currentYear = new Date().getFullYear();
 const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const DAYS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
-// ===== LOGIN =====
 function login() {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
@@ -233,7 +982,6 @@ function showAdminScreen() {
   document.getElementById('userEmail').textContent = currentUser.email;
 }
 
-// ===== POSTS =====
 function openNewPost(dateStr) {
   editingId = null;
   uploadedImages = [];
@@ -277,7 +1025,8 @@ function savePost() {
     copy,
     networks,
     images: uploadedImages,
-    status: 'pending'
+    status: 'pending',
+    comments: []
   };
 
   if (editingId) {
@@ -294,7 +1043,7 @@ function savePost() {
 }
 
 function deletePost(id) {
-  if (confirm('¿Eliminar?')) {
+  if (confirm('¿Eliminar este post?')) {
     posts = posts.filter(p => p.id !== id);
     renderCalendar();
     renderPosts();
@@ -329,7 +1078,6 @@ function updateStatus(id, status) {
   }
 }
 
-// ===== IMÁGENES =====
 function handleFiles() {
   const files = document.getElementById('fileInput').files;
   Array.from(files).forEach(file => {
@@ -359,7 +1107,6 @@ function removeImage(idx) {
   renderImagePreview();
 }
 
-// ===== CALENDARIO =====
 function renderCalendar() {
   document.getElementById('calendarMonthYear').textContent = MONTHS[currentMonth] + ' ' + currentYear;
   
@@ -379,8 +1126,7 @@ function renderCalendar() {
   for (let i = 0; i < first; i++) {
     const d = new Date(currentYear, currentMonth, 0 - first + i + 2);
     const cell = document.createElement('div');
-    cell.className = 'day';
-    cell.style.opacity = '0.3';
+    cell.className = 'day other-month';
     cell.innerHTML = `<div class="day-number">${d.getDate()}</div>`;
     cal.appendChild(cell);
   }
@@ -392,7 +1138,7 @@ function renderCalendar() {
     
     const cell = document.createElement('div');
     cell.className = 'day';
-    cell.innerHTML = `<div class="day-number">${d}</div><div class="day-posts">${dayPosts.map(p => `<div class="day-post" onclick="editPost('${p.id}')" title="${p.title}">${p.title}</div>`).join('')}</div>`;
+    cell.innerHTML = `<div class="day-number">${d}</div><div class="day-posts">${dayPosts.map(p => `<div class="day-post ${p.status}" onclick="editPost('${p.id}')" title="${p.title}">${p.title}</div>`).join('')}</div>`;
     cell.onclick = () => openNewPost(iso);
     cal.appendChild(cell);
   }
@@ -401,8 +1147,7 @@ function renderCalendar() {
   for (let i = 1; i <= rem; i++) {
     const d = new Date(currentYear, currentMonth + 1, i);
     const cell = document.createElement('div');
-    cell.className = 'day';
-    cell.style.opacity = '0.3';
+    cell.className = 'day other-month';
     cell.innerHTML = `<div class="day-number">${d.getDate()}</div>`;
     cal.appendChild(cell);
   }
@@ -410,28 +1155,21 @@ function renderCalendar() {
 
 function prevMonth() {
   currentMonth--;
-  if (currentMonth < 0) {
-    currentMonth = 11;
-    currentYear--;
-  }
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
   renderCalendar();
 }
 
 function nextMonth() {
   currentMonth++;
-  if (currentMonth > 11) {
-    currentMonth = 0;
-    currentYear++;
-  }
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
   renderCalendar();
 }
 
-// ===== RENDER =====
 function renderPosts() {
   const container = document.getElementById('postsContainer');
   
   if (posts.length === 0) {
-    container.innerHTML = '<p style="grid-column: 1/-1; color: #999; text-align: center; padding: 40px;">No hay posts aún</p>';
+    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #a0a0b0;"><p style="font-size: 18px; margin-bottom: 10px;">📭 No hay posts aún</p><p style="font-size: 13px;">Crea tu primer post para comenzar</p></div>';
     return;
   }
 
@@ -445,10 +1183,12 @@ function renderPosts() {
       <div class="post-card">
         <div class="post-header">
           <div class="post-title">${p.title}</div>
-          <div class="post-meta">${p.date}</div>
-          <span class="post-status status-${p.status}">
-            ${p.status === 'approved' ? '✓ Aprobado' : '○ Pendiente'}
-          </span>
+          <div class="post-meta">
+            <span>${p.date}</span>
+            <span class="post-status status-${p.status}">
+              ${p.status === 'approved' ? '✓ Aprobado' : '○ Pendiente'}
+            </span>
+          </div>
         </div>
         ${imgHtml}
         <div class="post-body">
@@ -458,9 +1198,9 @@ function renderPosts() {
           </div>
         </div>
         <div class="post-actions">
-          <button onclick="editPost('${p.id}')">Editar</button>
-          <button onclick="deletePost('${p.id}')">Eliminar</button>
-          <button onclick="updateStatus('${p.id}', 'approved')">Aprobar</button>
+          <button onclick="editPost('${p.id}')">✏️ Editar</button>
+          <button onclick="deletePost('${p.id}')">🗑 Eliminar</button>
+          <button onclick="updateStatus('${p.id}', 'approved')">✓ Aprobar</button>
         </div>
       </div>
     `;
@@ -483,7 +1223,6 @@ function formatDateISO(date) {
   return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
 }
 
-// ===== INIT =====
 updateStats();
 </script>
 
