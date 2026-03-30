@@ -3,203 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>grid. צור - Parrilla de Contenido</title>
+<title>grid. - Parrilla de Contenido</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: Arial, sans-serif;
   background: #0a0a0a; 
   color: #fff;
-  min-height: 100vh;
 }
-.login-box {
-  max-width: 400px;
-  margin: 100px auto;
-  background: #1a1a1a;
-  padding: 40px;
-  border-radius: 12px;
-  border: 1px solid #333;
-}
-.login-box h2 { margin-bottom: 30px; text-align: center; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; margin-bottom: 6px; font-size: 12px; color: #999; }
-.form-group input { 
-  width: 100%;
-  padding: 10px 12px;
-  background: #0a0a0a;
-  border: 1px solid #333;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-}
-.btn { 
-  width: 100%;
-  padding: 12px;
-  background: #7c3aed;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+.login-screen { display: none; }
+.login-screen.show { display: block; }
+.admin-screen { display: none; }
+.admin-screen.show { display: block; }
+.login-box { background: #1a1a1a; padding: 40px; border-radius: 8px; max-width: 400px; margin: 100px auto; }
+.login-box h1 { margin-bottom: 20px; text-align: center; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; }
+.form-group input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #333; border-radius: 4px; color: #fff; }
+.btn { width: 100%; padding: 10px; background: #7c3aed; border: none; border-radius: 4px; color: #fff; cursor: pointer; font-weight: bold; }
 .btn:hover { background: #6d28d9; }
 .error { color: #ef4444; font-size: 12px; margin-top: 10px; }
-.admin { display: none; }
-.admin.show { display: block; }
-.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 30px; border-bottom: 1px solid #333; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
 .topbar h1 { margin: 0; }
-.btn-logout { background: #374151; color: #fff; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; }
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; }
-.stat-card { background: #1a1a1a; padding: 20px; border-radius: 12px; border: 1px solid #333; }
-.stat-card h3 { font-size: 12px; color: #999; text-transform: uppercase; margin-bottom: 8px; }
-.stat-card .value { font-size: 32px; font-weight: bold; }
-.btn-new { background: #7c3aed; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 20px; }
-.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.btn-logout { background: #374151; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+.stat-card { background: #1a1a1a; padding: 20px; border-radius: 8px; }
+.stat-label { font-size: 12px; color: #999; margin-bottom: 10px; }
+.stat-value { font-size: 32px; font-weight: bold; }
+.btn-new { background: #7c3aed; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 20px; }
 .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 30px; }
-.day-header { text-align: center; font-size: 12px; color: #999; padding: 10px 0; font-weight: 600; }
-.day-cell { 
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 10px;
-  min-height: 120px;
-  cursor: pointer;
-}
-.day-cell:hover { border-color: #7c3aed; background: #252525; }
-.day-cell.other-month { opacity: 0.3; }
-.day-date { font-size: 12px; font-weight: 600; margin-bottom: 8px; }
-.day-post-item { background: #0a0a0a; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px; font-size: 10px; cursor: pointer; border-left: 2px solid; }
-.day-post-pending { color: #fcd34d; border-color: #f59e0b; }
-.day-post-approved { color: #10b981; border-color: #10b981; }
-.posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-.post-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; }
-.post-header { padding: 16px; border-bottom: 1px solid #333; }
-.post-title { font-weight: 600; margin-bottom: 4px; }
-.post-date { font-size: 12px; color: #999; }
-.post-images { display: grid; gap: 2px; background: #0a0a0a; }
-.post-images.one { grid-template-columns: 1fr; }
-.post-images.two { grid-template-columns: 1fr 1fr; }
-.post-images.three { grid-template-columns: 2fr 1fr; }
-.img-slot { aspect-ratio: 4/3; overflow: hidden; }
-.img-slot img { width: 100%; height: 100%; object-fit: cover; }
-.post-body { padding: 16px; }
-.post-copy { font-size: 14px; line-height: 1.5; margin-bottom: 12px; white-space: pre-wrap; }
-.post-networks { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
-.post-network { font-size: 11px; background: #0a0a0a; padding: 3px 8px; border-radius: 12px; color: #999; }
-.post-status { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
+.day-header { text-align: center; color: #999; padding: 10px 0; font-weight: bold; }
+.day { background: #1a1a1a; padding: 10px; border-radius: 4px; min-height: 100px; border: 1px solid #333; cursor: pointer; }
+.day:hover { background: #252525; }
+.day-number { font-weight: bold; margin-bottom: 5px; }
+.day-posts { font-size: 11px; }
+.day-post { background: #0a0a0a; padding: 3px 6px; margin: 3px 0; border-radius: 3px; cursor: pointer; }
+.posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.post-card { background: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
+.post-header { padding: 15px; border-bottom: 1px solid #333; }
+.post-title { font-weight: bold; margin-bottom: 5px; }
+.post-meta { font-size: 12px; color: #999; }
+.post-image { width: 100%; aspect-ratio: 1; object-fit: cover; background: #0a0a0a; }
+.post-body { padding: 15px; }
+.post-copy { margin-bottom: 10px; line-height: 1.5; }
+.post-networks { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
+.post-network { font-size: 11px; background: #0a0a0a; padding: 3px 8px; border-radius: 4px; }
+.post-status { display: inline-block; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
 .status-pending { background: #92400e; color: #fcd34d; }
 .status-approved { background: #065f46; color: #10b981; }
-.status-rejected { background: #7f1d1d; color: #ef4444; }
-.post-actions { padding: 12px 16px; border-top: 1px solid #333; display: flex; gap: 8px; }
-.post-actions button { flex: 1; padding: 6px; background: #0a0a0a; border: 1px solid #333; border-radius: 6px; color: #fff; cursor: pointer; font-size: 12px; }
+.post-actions { padding: 10px 15px; border-top: 1px solid #333; display: flex; gap: 8px; }
+.post-actions button { flex: 1; padding: 6px; background: #0a0a0a; border: 1px solid #333; border-radius: 4px; color: #fff; cursor: pointer; font-size: 12px; }
 .post-actions button:hover { background: #252525; }
-.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
-.modal.open { display: flex; }
-.modal-content { background: #1a1a1a; border-radius: 12px; padding: 24px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; border: 1px solid #333; }
-.modal-title { font-size: 20px; font-weight: 600; margin-bottom: 20px; }
-.modal-close { float: right; background: none; border: none; color: #fff; cursor: pointer; font-size: 24px; margin-top: -10px; }
-.form-textarea { width: 100%; padding: 10px 12px; background: #0a0a0a; border: 1px solid #333; border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; min-height: 100px; resize: vertical; }
-.img-upload { border: 2px dashed #333; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; margin: 10px 0; }
-.img-upload:hover { border-color: #7c3aed; background: rgba(124, 58, 237, 0.1); }
-.img-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-.img-thumb { position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; }
+.modal.show { display: flex; align-items: center; justify-content: center; }
+.modal-content { background: #1a1a1a; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+.modal-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+.form-group textarea { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #333; border-radius: 4px; color: #fff; font-family: Arial; min-height: 100px; resize: vertical; }
+.checkbox-group { display: flex; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
+.checkbox-group label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+.img-upload { border: 2px dashed #333; padding: 20px; text-align: center; border-radius: 4px; cursor: pointer; margin: 15px 0; }
+.img-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+.img-thumb { position: relative; aspect-ratio: 1; border-radius: 4px; overflow: hidden; border: 1px solid #333; }
 .img-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.img-remove { position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; border-radius: 50%; background: rgba(0,0,0,0.8); border: none; color: #fff; cursor: pointer; }
-.modal-buttons { display: flex; gap: 8px; margin-top: 24px; }
-.modal-buttons button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.img-remove { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: rgba(0,0,0,0.9); border: none; color: #fff; cursor: pointer; border-radius: 50%; }
+.modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+.modal-buttons button { flex: 1; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
 .modal-buttons .cancel { background: #374151; color: #fff; }
 .modal-buttons .save { background: #7c3aed; color: #fff; }
-.preview-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-.preview-modal.open { display: flex; }
-.preview-content { max-width: 400px; width: 100%; }
-.ig-preview { background: #fff; border-radius: 12px; overflow: hidden; }
-.ig-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid #e5e5e5; }
-.ig-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-.ig-username { font-weight: 600; color: #000; font-size: 13px; }
-.ig-sponsored { font-size: 11px; color: #999; }
-.ig-image { width: 100%; aspect-ratio: 1; object-fit: cover; background: #f0f0f0; }
-.ig-actions { padding: 12px 14px; display: flex; gap: 14px; border-bottom: 1px solid #e5e5e5; }
-.ig-action { font-size: 18px; cursor: pointer; }
-.ig-likes { padding: 0 14px 6px; font-weight: 600; color: #000; font-size: 13px; }
-.ig-caption { padding: 0 14px 14px; color: #000; font-size: 13px; line-height: 1.5; }
-.ig-caption strong { font-weight: 600; }
-.preview-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; cursor: pointer; font-size: 32px; }
-@media (max-width: 768px) {
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  .posts-grid { grid-template-columns: 1fr; }
-}
+.modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
 </style>
 </head>
 <body>
 
-<div id="loginView">
-  <div class="login-box">
-    <h2>צור - grid.</h2>
-    <p style="text-align: center; color: #999; margin-bottom: 30px;">Parrilla de Contenido</p>
-    
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="email" value="admin@tsur.com">
+<!-- LOGIN -->
+<div class="login-screen show">
+  <div class="container">
+    <div class="login-box">
+      <h1>grid. צור</h1>
+      <p style="text-align: center; color: #999; margin-bottom: 30px;">Parrilla de Contenido</p>
+      
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" value="admin@tsur.com">
+      </div>
+      
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" value="admin123">
+      </div>
+      
+      <button class="btn" onclick="login()">Ingresar</button>
+      <div id="loginError" class="error"></div>
     </div>
-    
-    <div class="form-group">
-      <label>Contraseña</label>
-      <input type="password" id="password" value="admin123">
-    </div>
-    
-    <button class="btn" onclick="handleLogin()">Ingresar</button>
-    <div id="loginError" class="error"></div>
   </div>
 </div>
 
-<div id="adminView" class="admin">
+<!-- ADMIN -->
+<div class="admin-screen">
   <div class="container">
     <div class="topbar">
-      <h1>צור - grid.</h1>
+      <h1>grid. צור</h1>
       <div>
-        <span id="userEmail" style="font-size: 13px; color: #999; margin-right: 16px;"></span>
-        <button class="btn-logout" onclick="handleLogout()">Cerrar sesión</button>
+        <span id="userEmail" style="color: #999; margin-right: 20px;"></span>
+        <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
       </div>
     </div>
 
     <div class="stats">
       <div class="stat-card">
-        <h3>Total Posts</h3>
-        <div class="value" id="statTotal">0</div>
+        <div class="stat-label">TOTAL POSTS</div>
+        <div class="stat-value" id="statTotal">0</div>
       </div>
       <div class="stat-card">
-        <h3>Aprobados</h3>
-        <div class="value" id="statApproved" style="color: #10b981;">0</div>
+        <div class="stat-label">APROBADOS</div>
+        <div class="stat-value" style="color: #10b981;" id="statApproved">0</div>
       </div>
       <div class="stat-card">
-        <h3>Pendientes</h3>
-        <div class="value" id="statPending" style="color: #f59e0b;">0</div>
+        <div class="stat-label">PENDIENTES</div>
+        <div class="stat-value" style="color: #f59e0b;" id="statPending">0</div>
       </div>
       <div class="stat-card">
-        <h3>Rechazados</h3>
-        <div class="value" id="statRejected" style="color: #ef4444;">0</div>
+        <div class="stat-label">RECHAZADOS</div>
+        <div class="stat-value" style="color: #ef4444;" id="statRejected">0</div>
       </div>
     </div>
 
-    <button class="btn-new" onclick="openModal()">+ Nuevo Post</button>
+    <button class="btn-new" onclick="openNewPost()">+ Nuevo Post</button>
 
-    <div class="calendar-header">
-      <h2 id="calendarMonth">Marzo 2026</h2>
-      <div style="display: flex; gap: 8px;">
-        <button class="btn" style="width: auto; padding: 8px 12px;" onclick="prevMonth()">‹ Anterior</button>
-        <button class="btn" style="width: auto; padding: 8px 12px;" onclick="nextMonth()">Siguiente ›</button>
-      </div>
+    <h2 style="margin-bottom: 20px;">CALENDARIO</h2>
+    <div id="calendarMonthYear" style="margin-bottom: 10px; text-align: center; font-weight: bold;"></div>
+    <div style="margin-bottom: 10px; text-align: center;">
+      <button class="btn" style="width: auto; padding: 8px 15px; margin-right: 10px;" onclick="prevMonth()">‹ Anterior</button>
+      <button class="btn" style="width: auto; padding: 8px 15px;" onclick="nextMonth()">Siguiente ›</button>
     </div>
-
     <div class="calendar" id="calendar"></div>
 
-    <h2 style="margin-bottom: 16px;">Posts Recientes</h2>
-    <div class="posts-grid" id="postsGrid"></div>
+    <h2 style="margin-bottom: 20px;">POSTS RECIENTES</h2>
+    <div class="posts" id="postsContainer"></div>
   </div>
 </div>
 
+<!-- MODAL -->
 <div id="postModal" class="modal">
   <div class="modal-content">
     <button class="modal-close" onclick="closeModal()">×</button>
@@ -207,7 +152,7 @@ body {
     
     <div class="form-group">
       <label>Título</label>
-      <input type="text" id="postTitle" placeholder="Ej. Promo Verano 2025">
+      <input type="text" id="postTitle" placeholder="Ej. Promo Verano">
     </div>
 
     <div class="form-group">
@@ -216,137 +161,100 @@ body {
     </div>
 
     <div class="form-group">
-      <label>Texto / Copy</label>
+      <label>Texto</label>
       <textarea id="postCopy" placeholder="Escribe el texto del post..."></textarea>
     </div>
 
     <div class="form-group">
       <label>Redes Sociales</label>
-      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-          <input type="checkbox" id="net-ig" checked> 📷 Instagram
-        </label>
-        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-          <input type="checkbox" id="net-fb"> 👥 Facebook
-        </label>
-        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-          <input type="checkbox" id="net-tt"> 🎵 TikTok
-        </label>
-        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-          <input type="checkbox" id="net-li"> 💼 LinkedIn
-        </label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="net-ig" checked> Instagram</label>
+        <label><input type="checkbox" id="net-fb"> Facebook</label>
+        <label><input type="checkbox" id="net-tt"> TikTok</label>
+        <label><input type="checkbox" id="net-li"> LinkedIn</label>
       </div>
     </div>
 
     <div class="form-group">
-      <label>Imágenes (múltiples)</label>
-      <div class="img-upload" onclick="document.getElementById('postImages').click()">
-        📎 Haz clic para agregar imágenes
+      <label>Imágenes</label>
+      <div class="img-upload" onclick="document.getElementById('fileInput').click()">
+        📎 Haz clic para agregar imágenes (máximo 6)
       </div>
-      <input type="file" id="postImages" accept="image/*" multiple style="display: none" onchange="handleImageUpload()">
+      <input type="file" id="fileInput" accept="image/*" multiple style="display: none" onchange="handleFiles()">
       <div class="img-preview" id="imgPreview"></div>
     </div>
 
     <div class="modal-buttons">
       <button class="cancel" onclick="closeModal()">Cancelar</button>
-      <button class="save" onclick="savePost()" id="btnSave">Guardar</button>
+      <button class="save" onclick="savePost()">Guardar</button>
     </div>
   </div>
 </div>
 
-<div id="previewModal" class="preview-modal">
-  <button class="preview-close" onclick="closePreview()">×</button>
-  <div class="preview-content" id="previewContent"></div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
-
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBAIcmc-6TDWvYPxHskbLA00uLFWktPzl4",
-  authDomain: "grid-90b69.firebaseapp.com",
-  projectId: "grid-90b69",
-  storageBucket: "grid-90b69.firebasestorage.app",
-  messagingSenderId: "957482951210",
-  appId: "1:957482951210:web:be37874656a43bda691953"
-};
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+// ===== DATOS EN MEMORIA =====
+let currentUser = null;
+let posts = [];
+let uploadedImages = [];
+let editingId = null;
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
 
 const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const DAYS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
-let currentUser = null;
-let posts = [];
-let editingId = null;
-let currentMonth = new Date().getMonth();
-let currentYear = new Date().getFullYear();
-let uploadedImages = [];
-
-async function handleLogin() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+// ===== LOGIN =====
+function login() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
   const error = document.getElementById('loginError');
-  const btn = event.target;
   
-  btn.disabled = true;
-  btn.textContent = 'Ingresando...';
-  error.textContent = '';
-
-  try {
-    const result = await auth.signInWithEmailAndPassword(email, password);
-    currentUser = result.user;
-    localStorage.setItem('userId', currentUser.uid);
-    showAdminView();
-    loadPosts();
-  } catch (err) {
+  if (email === 'admin@tsur.com' && password === 'admin123') {
+    currentUser = { email: email };
+    error.textContent = '';
+    showAdminScreen();
+    renderCalendar();
+    renderPosts();
+  } else {
     error.textContent = 'Email o contraseña incorrectos';
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Ingresar';
   }
 }
 
-async function handleLogout() {
-  await auth.signOut();
+function logout() {
   currentUser = null;
-  localStorage.removeItem('userId');
   posts = [];
-  document.getElementById('loginView').style.display = 'block';
-  document.getElementById('adminView').classList.remove('show');
+  document.querySelector('.login-screen').classList.add('show');
+  document.querySelector('.admin-screen').classList.remove('show');
 }
 
-function showAdminView() {
-  document.getElementById('loginView').style.display = 'none';
-  document.getElementById('adminView').classList.add('show');
+function showAdminScreen() {
+  document.querySelector('.login-screen').classList.remove('show');
+  document.querySelector('.admin-screen').classList.add('show');
   document.getElementById('userEmail').textContent = currentUser.email;
 }
 
-async function loadPosts() {
-  try {
-    const snapshot = await db.collection('posts')
-      .where('userId', '==', currentUser.uid)
-      .orderBy('createdAt', 'desc')
-      .get();
-    
-    posts = [];
-    snapshot.forEach(doc => {
-      posts.push({ id: doc.id, ...doc.data() });
-    });
-    
-    renderCalendar();
-    renderPosts();
-    updateStats();
-  } catch (err) {
-    console.error('Error cargando posts:', err);
-  }
+// ===== POSTS =====
+function openNewPost(dateStr) {
+  editingId = null;
+  uploadedImages = [];
+  document.getElementById('modalTitle').textContent = 'Nuevo Post';
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postDate').value = dateStr || '';
+  document.getElementById('postCopy').value = '';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('imgPreview').innerHTML = '';
+  document.getElementById('net-ig').checked = true;
+  document.getElementById('net-fb').checked = false;
+  document.getElementById('net-tt').checked = false;
+  document.getElementById('net-li').checked = false;
+  document.getElementById('postModal').classList.add('show');
 }
 
-async function savePost() {
+function closeModal() {
+  document.getElementById('postModal').classList.remove('show');
+}
+
+function savePost() {
   const title = document.getElementById('postTitle').value.trim();
   const date = document.getElementById('postDate').value;
   const copy = document.getElementById('postCopy').value.trim();
@@ -362,197 +270,68 @@ async function savePost() {
   if (document.getElementById('net-tt').checked) networks.push('TikTok');
   if (document.getElementById('net-li').checked) networks.push('LinkedIn');
 
-  const btn = document.getElementById('btnSave');
-  btn.disabled = true;
-  btn.textContent = 'Guardando...';
+  const postData = {
+    id: editingId || 'post_' + Date.now(),
+    title,
+    date,
+    copy,
+    networks,
+    images: uploadedImages,
+    status: 'pending'
+  };
 
-  try {
-    const postData = {
-      title,
-      date,
-      copy,
-      networks: networks.length > 0 ? networks : ['Instagram'],
-      images: uploadedImages,
-      status: 'pending',
-      userId: currentUser.uid,
-      createdAt: new Date(),
-      comments: []
-    };
+  if (editingId) {
+    const idx = posts.findIndex(p => p.id === editingId);
+    if (idx >= 0) posts[idx] = postData;
+  } else {
+    posts.push(postData);
+  }
 
-    if (editingId) {
-      await db.collection('posts').doc(editingId).update(postData);
-      alert('✓ Post actualizado');
-    } else {
-      await db.collection('posts').add(postData);
-      alert('✓ Post creado');
-    }
+  closeModal();
+  renderCalendar();
+  renderPosts();
+  updateStats();
+}
 
-    closeModal();
-    loadPosts();
-  } catch (err) {
-    alert('Error: ' + err.message);
-    console.error(err);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Guardar';
+function deletePost(id) {
+  if (confirm('¿Eliminar?')) {
+    posts = posts.filter(p => p.id !== id);
+    renderCalendar();
+    renderPosts();
+    updateStats();
   }
 }
 
-async function deletePost(id) {
-  if (!confirm('¿Eliminar?')) return;
-  try {
-    await db.collection('posts').doc(id).delete();
-    loadPosts();
-  } catch (err) {
-    alert('Error: ' + err.message);
-  }
-}
-
-async function updateStatus(id, status) {
-  try {
-    await db.collection('posts').doc(id).update({ status });
-    loadPosts();
-  } catch (err) {
-    alert('Error: ' + err.message);
-  }
-}
-
-function renderCalendar() {
-  document.getElementById('calendarMonth').textContent = MONTHS[currentMonth] + ' ' + currentYear;
+function editPost(id) {
+  const post = posts.find(p => p.id === id);
+  editingId = id;
+  uploadedImages = [...(post.images || [])];
   
-  const cal = document.getElementById('calendar');
-  cal.innerHTML = '';
+  document.getElementById('modalTitle').textContent = 'Editar Post';
+  document.getElementById('postTitle').value = post.title;
+  document.getElementById('postDate').value = post.date;
+  document.getElementById('postCopy').value = post.copy;
+  document.getElementById('net-ig').checked = post.networks.includes('Instagram');
+  document.getElementById('net-fb').checked = post.networks.includes('Facebook');
+  document.getElementById('net-tt').checked = post.networks.includes('TikTok');
+  document.getElementById('net-li').checked = post.networks.includes('LinkedIn');
   
-  DAYS.forEach(d => {
-    const h = document.createElement('div');
-    h.className = 'day-header';
-    h.textContent = d;
-    cal.appendChild(h);
-  });
+  renderImagePreview();
+  document.getElementById('postModal').classList.add('show');
+}
 
-  const first = new Date(currentYear, currentMonth, 1).getDay();
-  const days = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-  for (let i = 0; i < first; i++) {
-    const d = new Date(currentYear, currentMonth, 0 - first + i + 2);
-    renderDayCell(cal, d, true);
-  }
-
-  for (let d = 1; d <= days; d++) {
-    const dt = new Date(currentYear, currentMonth, d);
-    renderDayCell(cal, dt, false);
-  }
-
-  const rem = 42 - (first + days);
-  for (let i = 1; i <= rem; i++) {
-    const d = new Date(currentYear, currentMonth + 1, i);
-    renderDayCell(cal, d, true);
+function updateStatus(id, status) {
+  const post = posts.find(p => p.id === id);
+  if (post) {
+    post.status = status;
+    renderPosts();
+    updateStats();
   }
 }
 
-function renderDayCell(parent, date, otherMonth) {
-  const cell = document.createElement('div');
-  cell.className = 'day-cell' + (otherMonth ? ' other-month' : '');
-  
-  const iso = formatDateISO(date);
-  const dayPosts = posts.filter(p => p.date === iso);
-  
-  const dateDiv = document.createElement('div');
-  dateDiv.className = 'day-date';
-  dateDiv.textContent = date.getDate();
-  cell.appendChild(dateDiv);
-
-  dayPosts.forEach(p => {
-    const postEl = document.createElement('div');
-    postEl.className = 'day-post-item day-post-' + p.status;
-    postEl.textContent = p.title;
-    postEl.onclick = (e) => { e.stopPropagation(); editPost(p.id); };
-    cell.appendChild(postEl);
-  });
-
-  cell.onclick = () => { if (!otherMonth) openModal(iso); };
-  parent.appendChild(cell);
-}
-
-function renderPosts() {
-  const grid = document.getElementById('postsGrid');
-  
-  if (posts.length === 0) {
-    grid.innerHTML = '<p style="grid-column: 1/-1; color: #999; text-align: center; padding: 40px;">No hay posts aún</p>';
-    return;
-  }
-
-  grid.innerHTML = posts.map(p => {
-    let imagesHtml = '';
-    if (p.images && p.images.length > 0) {
-      const count = p.images.length;
-      if (count === 1) {
-        imagesHtml = `<div class="post-images one"><div class="img-slot"><img src="${p.images[0]}"></div></div>`;
-      } else if (count === 2) {
-        imagesHtml = `<div class="post-images two">${p.images.map(img => `<div class="img-slot"><img src="${img}"></div>`).join('')}</div>`;
-      } else {
-        imagesHtml = `<div class="post-images three">${p.images.slice(0, 3).map(img => `<div class="img-slot"><img src="${img}"></div>`).join('')}</div>`;
-      }
-    }
-
-    return `
-      <div class="post-card">
-        <div class="post-header">
-          <div class="post-title">${p.title}</div>
-          <div class="post-date">${p.date}</div>
-          <span class="post-status status-${p.status}">
-            ${p.status === 'approved' ? '✓ Aprobado' : p.status === 'rejected' ? '✕ Rechazado' : '○ Pendiente'}
-          </span>
-        </div>
-        ${imagesHtml}
-        <div class="post-body">
-          <div class="post-copy">${p.copy}</div>
-          ${p.networks.length > 0 ? `<div class="post-networks">${p.networks.map(n => `<span class="post-network">${n}</span>`).join('')}</div>` : ''}
-        </div>
-        <div class="post-actions">
-          <button onclick="previewPost('${p.id}')">👁 Vista Previa</button>
-          <button onclick="editPost('${p.id}')">✏️ Editar</button>
-          <button onclick="deletePost('${p.id}')">🗑 Eliminar</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function updateStats() {
-  const total = posts.length;
-  const approved = posts.filter(p => p.status === 'approved').length;
-  const pending = posts.filter(p => p.status === 'pending').length;
-  const rejected = posts.filter(p => p.status === 'rejected').length;
-
-  document.getElementById('statTotal').textContent = total;
-  document.getElementById('statApproved').textContent = approved;
-  document.getElementById('statPending').textContent = pending;
-  document.getElementById('statRejected').textContent = rejected;
-}
-
-function openModal(dateStr) {
-  editingId = null;
-  uploadedImages = [];
-  document.getElementById('modalTitle').textContent = 'Nuevo Post';
-  document.getElementById('postTitle').value = '';
-  document.getElementById('postDate').value = dateStr || '';
-  document.getElementById('postCopy').value = '';
-  document.getElementById('postImages').value = '';
-  document.getElementById('imgPreview').innerHTML = '';
-  document.getElementById('net-ig').checked = true;
-  document.getElementById('net-fb').checked = false;
-  document.getElementById('net-tt').checked = false;
-  document.getElementById('net-li').checked = false;
-  document.getElementById('postModal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('postModal').classList.remove('open');
-}
-
-function handleImageUpload() {
-  const files = document.getElementById('postImages').files;
+// ===== IMÁGENES =====
+function handleFiles() {
+  const files = document.getElementById('fileInput').files;
   Array.from(files).forEach(file => {
     if (uploadedImages.length < 6) {
       const reader = new FileReader();
@@ -580,83 +359,132 @@ function removeImage(idx) {
   renderImagePreview();
 }
 
-function editPost(id) {
-  const post = posts.find(p => p.id === id);
-  editingId = id;
-  uploadedImages = [...(post.images || [])];
+// ===== CALENDARIO =====
+function renderCalendar() {
+  document.getElementById('calendarMonthYear').textContent = MONTHS[currentMonth] + ' ' + currentYear;
   
-  document.getElementById('modalTitle').textContent = 'Editar Post';
-  document.getElementById('postTitle').value = post.title;
-  document.getElementById('postDate').value = post.date;
-  document.getElementById('postCopy').value = post.copy;
-  document.getElementById('net-ig').checked = post.networks.includes('Instagram');
-  document.getElementById('net-fb').checked = post.networks.includes('Facebook');
-  document.getElementById('net-tt').checked = post.networks.includes('TikTok');
-  document.getElementById('net-li').checked = post.networks.includes('LinkedIn');
+  const cal = document.getElementById('calendar');
+  cal.innerHTML = '';
   
-  renderImagePreview();
-  document.getElementById('postModal').classList.add('open');
-}
+  DAYS.forEach(d => {
+    const h = document.createElement('div');
+    h.className = 'day-header';
+    h.textContent = d;
+    cal.appendChild(h);
+  });
 
-function previewPost(id) {
-  const post = posts.find(p => p.id === id);
-  const img = post.images && post.images[0] ? post.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23f0f0f0" width="400" height="400"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="18"%3ESin imagen%3C/text%3E%3C/svg%3E';
-  
-  const preview = `
-    <div class="ig-preview">
-      <div class="ig-header">
-        <div class="ig-avatar"></div>
-        <div>
-          <div class="ig-username">tu_agencia</div>
-          <div class="ig-sponsored">Patrocinado</div>
-        </div>
-      </div>
-      <img src="${img}" class="ig-image">
-      <div class="ig-actions">
-        <span class="ig-action">🤍</span>
-        <span class="ig-action">💬</span>
-        <span class="ig-action">📤</span>
-      </div>
-      <div class="ig-likes">1,284 Me gusta</div>
-      <div class="ig-caption">
-        <strong>tu_agencia</strong> ${post.copy.replace(/\n/g, '<br>')}
-      </div>
-    </div>
-  `;
-  
-  document.getElementById('previewContent').innerHTML = preview;
-  document.getElementById('previewModal').classList.add('open');
-}
+  const first = new Date(currentYear, currentMonth, 1).getDay();
+  const days = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-function closePreview() {
-  document.getElementById('previewModal').classList.remove('open');
+  for (let i = 0; i < first; i++) {
+    const d = new Date(currentYear, currentMonth, 0 - first + i + 2);
+    const cell = document.createElement('div');
+    cell.className = 'day';
+    cell.style.opacity = '0.3';
+    cell.innerHTML = `<div class="day-number">${d.getDate()}</div>`;
+    cal.appendChild(cell);
+  }
+
+  for (let d = 1; d <= days; d++) {
+    const dt = new Date(currentYear, currentMonth, d);
+    const iso = formatDateISO(dt);
+    const dayPosts = posts.filter(p => p.date === iso);
+    
+    const cell = document.createElement('div');
+    cell.className = 'day';
+    cell.innerHTML = `<div class="day-number">${d}</div><div class="day-posts">${dayPosts.map(p => `<div class="day-post" onclick="editPost('${p.id}')" title="${p.title}">${p.title}</div>`).join('')}</div>`;
+    cell.onclick = () => openNewPost(iso);
+    cal.appendChild(cell);
+  }
+
+  const rem = 42 - (first + days);
+  for (let i = 1; i <= rem; i++) {
+    const d = new Date(currentYear, currentMonth + 1, i);
+    const cell = document.createElement('div');
+    cell.className = 'day';
+    cell.style.opacity = '0.3';
+    cell.innerHTML = `<div class="day-number">${d.getDate()}</div>`;
+    cal.appendChild(cell);
+  }
 }
 
 function prevMonth() {
   currentMonth--;
-  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
   renderCalendar();
 }
 
 function nextMonth() {
   currentMonth++;
-  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
   renderCalendar();
+}
+
+// ===== RENDER =====
+function renderPosts() {
+  const container = document.getElementById('postsContainer');
+  
+  if (posts.length === 0) {
+    container.innerHTML = '<p style="grid-column: 1/-1; color: #999; text-align: center; padding: 40px;">No hay posts aún</p>';
+    return;
+  }
+
+  container.innerHTML = posts.map(p => {
+    let imgHtml = '';
+    if (p.images && p.images.length > 0) {
+      imgHtml = `<img src="${p.images[0]}" class="post-image">`;
+    }
+
+    return `
+      <div class="post-card">
+        <div class="post-header">
+          <div class="post-title">${p.title}</div>
+          <div class="post-meta">${p.date}</div>
+          <span class="post-status status-${p.status}">
+            ${p.status === 'approved' ? '✓ Aprobado' : '○ Pendiente'}
+          </span>
+        </div>
+        ${imgHtml}
+        <div class="post-body">
+          <div class="post-copy">${p.copy}</div>
+          <div class="post-networks">
+            ${p.networks.map(n => `<span class="post-network">${n}</span>`).join('')}
+          </div>
+        </div>
+        <div class="post-actions">
+          <button onclick="editPost('${p.id}')">Editar</button>
+          <button onclick="deletePost('${p.id}')">Eliminar</button>
+          <button onclick="updateStatus('${p.id}', 'approved')">Aprobar</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateStats() {
+  const total = posts.length;
+  const approved = posts.filter(p => p.status === 'approved').length;
+  const pending = posts.filter(p => p.status === 'pending').length;
+  const rejected = posts.filter(p => p.status === 'rejected').length;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statApproved').textContent = approved;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statRejected').textContent = rejected;
 }
 
 function formatDateISO(date) {
   return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
 }
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-    currentUser = user;
-    showAdminView();
-    loadPosts();
-  } else {
-    document.getElementById('loginView').style.display = 'block';
-  }
-});
+// ===== INIT =====
+updateStats();
 </script>
 
 </body>
